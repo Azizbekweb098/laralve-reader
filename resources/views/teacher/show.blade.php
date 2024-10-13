@@ -18,10 +18,10 @@
   </thead>
   <tbody>
     <tr>
-      <th scope="row">{{ $post->id }}</th>
-      <td>{{ $post->name }}</td>
-      <td>{{ $post->surname }}</td>
-      <td>{{ $post->age }}</td>
+      <th scope="row">{{ $teacher->id }}</th>
+      <td>{{ $teacher->name }}</td>
+      <td>{{ $teacher->surname }}</td>
+      <td>{{ $teacher->age }}</td>
     </tr>
 
   </tbody>

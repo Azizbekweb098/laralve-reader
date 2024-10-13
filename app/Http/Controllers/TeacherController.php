@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TeacherStoreRequest;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 
@@ -35,13 +36,29 @@ class TeacherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TeacherStoreRequest $request)
     {
-       
+        $requestData = $request->all();
+    
+   if($request->hasFile('image')){
+    try{
+        $file =  $request->file('image');
+        $imageName = time(). '-'. $file->getClientOriginalName();
+        $file->move(public_path('images'), $imageName);
+        $requestData['image'] = $imageName;
+    } catch (\Exception $e){
+        return back()->withErrors(['image' => 'Rasmni yuklashda xato bor']);
+    }
+   }
         
-        Teacher::create($request->all());
+    
+        // Malumotlarni bazaga qo'shish
+        Teacher::create($requestData);  
+    
+        // Yo'naltirish
         return redirect()->route('teachers.index');
     }
+    
 
     /**
      * Display the specified resource.
@@ -49,10 +66,10 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Teacher $teacher)
     {
-        $post = Teacher::find($id);
-        return view('teacher.show', compact('post'));
+        
+        return view('teacher.show', compact('teacher'));
     }
 
     /**
@@ -61,10 +78,10 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Teacher $teacher)
     {
-        $post = Teacher::find($id);  // ID bo'yicha o'qituvchini topish
-        return view('teacher.edit', compact('post'));
+          // ID bo'yicha o'qituvchini topish
+        return view('teacher.edit', compact('teacher'));
     }
 
     /**
@@ -74,9 +91,9 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Teacher $teacher)
     {
-        $teacher = Teacher::find($id);
+       
         $teacher->update($request->all());
         return redirect()->route('teachers.index');
     }
@@ -87,9 +104,9 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Teacher $teacher)
     {
-         $teacher = Teacher::find($id);
+       
          if($teacher){
             $teacher->delete();
          };

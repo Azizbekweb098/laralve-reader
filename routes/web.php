@@ -2,11 +2,12 @@
 
 
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ReaderController;
-
+use App\Http\Controllers\ReaderTwoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,5 +20,8 @@ use App\Http\Controllers\ReaderController;
 */
 
 Route::get('/', [SiteController::class, 'index'])->name('home');
+Route::get('/rr', [SiteController::class, 'rr'])->name('rr');
 Route::resource('teachers', TeacherController::class);
 Route::resource('readers',  ReaderController::class);
+Route::resource('rdrtwo', ReaderTwoController::class);
+

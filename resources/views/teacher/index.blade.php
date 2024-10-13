@@ -15,7 +15,9 @@
       <th scope="col">id</th>
       <th scope="col">name</th>
       <th scope="col">surname</th>
+      <th scope="col">email</th>
       <th scope="col">age</th>
+      <th scope="col">image</th>
       <th scope="col">holati</th>
     </tr>
   </thead>
@@ -25,7 +27,11 @@
       <th scope="row">{{ $post->id }}</th>
       <td>{{ $post->name }}</td>
       <td>{{ $post->surname}}</td>
+      <td>{{ $post->email}}</td>
       <td>{{ $post->age }}</td>
+      <td>
+        <img src="/images/{{ $post->image }}" width="200px" alt="">
+      </td>
       <td class="d-flex" style="gap: 5px;">
         <a href="{{ route('teachers.show', $post->id) }}" class="btn btn-primary">Show</a>
         <a href="{{ route('teachers.edit', $post->id) }}" class="btn btn-primary">Update</a>
